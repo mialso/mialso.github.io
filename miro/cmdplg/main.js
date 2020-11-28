@@ -11,10 +11,24 @@ miro.onReady(function() {
             },
         },
     })
-    debugger
+    window.addEventListener('keydown', function(e){
+        if(e.key=='Escape' || e.key=='Esc' || e.keyCode==27) {
+            runMe()
+            return false;
+        }
+    }, true);
+    document.onkeyup = function(e) {
+        if (e.key === 27) {
+            runYou()
+        }
+    }
 })
 
 function runMe() {
-    console.info('runme')
+    console.info('run[me]')
+}
+
+function runYou() {
+    console.info('run[you]')
 }
 
