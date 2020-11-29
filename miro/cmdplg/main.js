@@ -108,7 +108,8 @@ function termOpenHandler() {
     )
 }
 
-function termEventBus(action) {
+function termEventBus(message) {
+    const action = message.data
     if (!(action.type && action.meta && action.meta === TERMINAL_META)) {
         return
     }
