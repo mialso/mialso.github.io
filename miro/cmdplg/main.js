@@ -44,6 +44,7 @@ miro.onReady(function() {
     })
     miro.addListener('ESC_PRESSED', termHandler)
     miro.addListener('DATA_BROADCASTED', termEventBus)
+    return
 })
 
 function toggleMode() {
@@ -57,8 +58,10 @@ function toggleMode() {
         default: {
             setState(defaultState)
             miro.showNotification('T-plugin: DISABLED')
+            break
         }
     }
+    return
 }
 
 let terminalClosePromise = null
@@ -83,6 +86,7 @@ function termHandler() {
         }
         default: break
     }
+    return
 }
 function termCloseHandler() {
     setState({ status: IN_PROGRESS })
@@ -95,6 +99,7 @@ function termCloseHandler() {
         setState({ status: UNMOUNTED })
     }
     miro.board.ui.closeBottomPanel()
+    return
 }
 
 function termOpenHandler() {
@@ -106,9 +111,13 @@ function termOpenHandler() {
             height: 200,
         },
     )
+    return
 }
 
 function termEventBus(message) {
+    if (!message.data) {
+        return
+    }
     const action = message.data
     if (!(action.type && action.meta && action.meta === TERMINAL_META)) {
         return
@@ -120,4 +129,5 @@ function termEventBus(message) {
         }
         default: break
     }
+    return
 }
