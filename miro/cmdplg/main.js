@@ -14,7 +14,7 @@ function createState(initialState = {}) {
     let state = { ...defaultState,  ...initialState }
     return {
         setState(newState) {
-            state = { ...state, newState }
+            state = { ...state, ...newState }
             if (state.isDebug) {
                 console.info(`new state:`)
                 console.log(state)
