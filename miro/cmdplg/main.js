@@ -11,7 +11,7 @@ const defaultState = {
 }
 
 function createState(initialState = {}) {
-    const state = { ...defaultState,  ...initialState }
+    let state = { ...defaultState,  ...initialState }
     return {
         setState(newState) {
             state = { ...state, newState }
