@@ -11,17 +11,7 @@ miro.onReady(function() {
             },
         },
     })
-    window.addEventListener('keydown', function(e){
-        if(e.key=='Escape' || e.key=='Esc' || e.keyCode==27) {
-            runMe()
-            return false;
-        }
-    }, true);
-    document.onkeyup = function(e) {
-        if (e.key === 27) {
-            runYou()
-        }
-    }
+    miro.addListener('ESC_PRESSED', termOpenHandler)
 })
 
 function runMe() {
@@ -32,3 +22,23 @@ function runYou() {
     console.info('run[you]')
 }
 
+let terminalClosePromise = null
+function termHandler() {
+    if (terminalClosePromise) {
+        return termCloseHandler()
+    }
+    return termOpenHandler()
+}
+function termCloseHandler() {
+    terminalClosePromise.then(() => {
+        terminalClosePromise = null
+        console.info('TERM CLOSED')
+    })
+    miro.board.ui.closeBottomPanel()
+}
+function termOpenHandler() {
+    terminalClosePromise = miro.board.ui.openBottomPanel("./terminal.html", {
+        width: 2000,
+        height: 200,
+    })
+}
