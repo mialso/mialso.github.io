@@ -105,7 +105,7 @@ function termCloseHandler() {
 function termOpenHandler() {
     setState({ status: IN_PROGRESS }) // actuall MOUNTED comes from terminal itself later
     terminalClosePromise = miro.board.ui.openBottomPanel(
-        "./terminal.html",
+        "/terminal.html",
         {
             width: 2000,
             height: 200,
