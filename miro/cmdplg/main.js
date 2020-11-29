@@ -55,7 +55,7 @@ function toggleMode() {
             break
         }
         default: {
-            setState({ mode: DISABLED })
+            setState(defaultState)
             miro.showNotification('T-plugin: DISABLED')
         }
     }

@@ -1,4 +1,4 @@
 miro.onReady(function() {
-    miro.broadcast(terminalMounted())
+    miro.broadcastData(terminalMounted())
 })
 
