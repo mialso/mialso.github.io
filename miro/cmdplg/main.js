@@ -11,7 +11,7 @@ miro.onReady(function() {
             },
         },
     })
-    miro.addListener('ESC_PRESSED', termOpenHandler)
+    miro.addListener('ESC_PRESSED', termHandler)
 })
 
 function runMe() {
@@ -37,8 +37,11 @@ function termCloseHandler() {
     miro.board.ui.closeBottomPanel()
 }
 function termOpenHandler() {
-    terminalClosePromise = miro.board.ui.openBottomPanel("./terminal.html", {
-        width: 2000,
-        height: 200,
-    })
+    terminalClosePromise = miro.board.ui.openBottomPanel(
+        "./terminal.html",
+        {
+            width: 2000,
+            height: 200,
+        },
+    )
 }
