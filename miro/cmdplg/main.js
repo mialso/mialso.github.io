@@ -16,7 +16,8 @@ function createState(initialState = {}) {
         setState(newState) {
             state = { ...state, newState }
             if (state.isDebug) {
-                console.info('new state: %s', state)
+                console.info(`new state:`)
+                console.log(state)
             }
         },
         getState() {
@@ -29,6 +30,7 @@ const { setState, getState } = createState()
 
 miro.onReady(function() {
     console.info('HERE I AM')
+    console.log(getState())
 
     miro.initialize({
         extensionPoints: {
@@ -49,12 +51,12 @@ function toggleMode() {
     switch(state.mode) {
         case DISABLED: {
             setState({ mode: ENABLED })
-            miro.board.ui.showNotification('T-plugin: ENABLED')
+            miro.showNotification('T-plugin: ENABLED')
             break
         }
         default: {
             setState({ mode: DISABLED })
-            miro.board.ui.showNotification('T-plugin: DISABLED')
+            miro.showNotification('T-plugin: DISABLED')
         }
     }
 }
