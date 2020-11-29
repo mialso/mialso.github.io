@@ -45,6 +45,7 @@ miro.onReady(function() {
 })
 
 function toggleMode() {
+    const state = getState()
     switch(state.mode) {
         case DISABLED: {
             setState({ mode: ENABLED })
