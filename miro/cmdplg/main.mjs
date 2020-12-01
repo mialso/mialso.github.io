@@ -1,3 +1,5 @@
+import { TERMINAL_META, TERMINAL_MOUNTED } from './action'
+
 const ENABLED = 'ENABLED'
 const DISABLED = 'DISABLED'
 const MOUNTED = 'MOUNTED'
@@ -11,24 +13,24 @@ const defaultState = {
 }
 
 function createState(initialState = {}) {
-    let state = { ...defaultState,  ...initialState }
+    let state = { ...defaultState, ...initialState }
     return {
         setState(newState) {
             state = { ...state, ...newState }
             if (state.isDebug) {
-                console.info(`new state:`)
+                console.info('new state:')
                 console.log(state)
             }
         },
         getState() {
             return { ...state }
-        }
+        },
     }
 }
 
 const { setState, getState } = createState()
 
-miro.onReady(function() {
+miro.onReady(() => {
     console.info('HERE I AM')
     console.log(getState())
 
@@ -44,24 +46,22 @@ miro.onReady(function() {
     })
     miro.addListener('ESC_PRESSED', termHandler)
     miro.addListener('DATA_BROADCASTED', termEventBus)
-    return
 })
 
 function toggleMode() {
     const state = getState()
-    switch(state.mode) {
-        case DISABLED: {
-            setState({ mode: ENABLED })
-            miro.showNotification('T-plugin: ENABLED')
-            break
-        }
-        default: {
-            setState(defaultState)
-            miro.showNotification('T-plugin: DISABLED')
-            break
-        }
+    switch (state.mode) {
+    case DISABLED: {
+        setState({ mode: ENABLED })
+        miro.showNotification('T-plugin: ENABLED')
+        break
     }
-    return
+    default: {
+        setState(defaultState)
+        miro.showNotification('T-plugin: DISABLED')
+        break
+    }
+    }
 }
 
 let terminalClosePromise = null
@@ -70,24 +70,24 @@ function termHandler() {
     if (state.mode === DISABLED) {
         return
     }
-    switch(state.status) {
-        case UNMOUNTED: {
-            termOpenHandler()
-            break
-        }
-        case IN_PROGRESS: {
-            // TODO force stop, reason?
-            // for now - do nothing while in progress
-            break
-        }
-        case MOUNTED: {
-            termCloseHandler()
-            break
-        }
-        default: break
+    switch (state.status) {
+    case UNMOUNTED: {
+        termOpenHandler()
+        break
     }
-    return
+    case IN_PROGRESS: {
+        // TODO force stop, reason?
+        // for now - do nothing while in progress
+        break
+    }
+    case MOUNTED: {
+        termCloseHandler()
+        break
+    }
+    default: break
+    }
 }
+
 function termCloseHandler() {
     setState({ status: IN_PROGRESS })
     if (terminalClosePromise) {
@@ -99,22 +99,11 @@ function termCloseHandler() {
         setState({ status: UNMOUNTED })
     }
     miro.board.ui.closeBottomPanel()
-    return
 }
 
 function termOpenHandler() {
     setState({ status: IN_PROGRESS }) // actuall MOUNTED comes from terminal itself later
-    terminalClosePromise = miro.board.ui.openModal("/miro/cmdplg/terminal.html", { width: 400, height: 400 })
-    /*
-    terminalClosePromise = miro.board.ui.openBottomPanel(
-        "/miro/cmdplg/terminal.html",
-        {
-            width: 2000,
-            height: 200,
-        },
-    )
-    */
-    return
+    terminalClosePromise = miro.board.ui.openModal('/miro/cmdplg/terminal.html', { width: 400, height: 400 })
 }
 
 function termEventBus(message) {
@@ -125,12 +114,11 @@ function termEventBus(message) {
     if (!(action.type && action.meta && action.meta === TERMINAL_META)) {
         return
     }
-    switch(action.type) {
-        case TERMINAL_MOUNTED: {
-            setState({ status: MOUNTED })
-            break
-        }
-        default: break
+    switch (action.type) {
+    case TERMINAL_MOUNTED: {
+        setState({ status: MOUNTED })
+        break
     }
-    return
+    default: break
+    }
 }
