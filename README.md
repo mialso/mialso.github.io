@@ -4,4 +4,5 @@
 
 ##### dev server
 * `npm run dev:server`
-* go to browser `http://localhost:5999/miro/cmdplg/index-dev.html`:w
+* go to browser `http://localhost:5999/miro/cmdplg/index-dev.html`
+* either click "RunTerm" button or open console and run `termRun()`

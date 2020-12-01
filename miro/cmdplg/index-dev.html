@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.1/xterm.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.1/xterm.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.1/xterm.js"></script>
     <script>
         var termRun 
         var miro = {
@@ -25,11 +25,12 @@
             },
         }
     </script>
-    <script type="module" src="main.mjs"></script>
-    <script type="module" src="terminal.mjs"></script>
+    <script defer type="module" src="main.mjs"></script>
+    <script defer type="module" src="terminal.mjs"></script>
 </head>
 <body>
     <div id="terminal" style="width:740px; height: 420px;"></div>
+    <button onclick="termRun()">RunTerm</button>
 </body>
 </html>
 
