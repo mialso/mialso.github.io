@@ -32,6 +32,7 @@ miro.onReady(function() {
     console.info('HERE I AM')
     console.log(getState())
 
+    debugger
     miro.initialize({
         extensionPoints: {
             bottomBar: {
