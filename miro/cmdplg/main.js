@@ -32,7 +32,6 @@ miro.onReady(function() {
     console.info('HERE I AM')
     console.log(getState())
 
-    debugger
     miro.initialize({
         extensionPoints: {
             bottomBar: {
@@ -105,6 +104,8 @@ function termCloseHandler() {
 
 function termOpenHandler() {
     setState({ status: IN_PROGRESS }) // actuall MOUNTED comes from terminal itself later
+    terminalClosePromise = miro.board.ui.openModal("/miro/cmdplg/terminal.html", { width: 400, height: 400 })
+    /*
     terminalClosePromise = miro.board.ui.openBottomPanel(
         "/miro/cmdplg/terminal.html",
         {
@@ -112,6 +113,7 @@ function termOpenHandler() {
             height: 200,
         },
     )
+    */
     return
 }
 
