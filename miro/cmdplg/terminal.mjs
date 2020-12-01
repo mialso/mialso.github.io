@@ -14,6 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 term.write(key)
             })
-        }, 1500)
+        }, 500)
     })
 })
