@@ -1,4 +1,4 @@
-import { terminalMounted } from './action'
+import { terminalMounted } from './action.mjs'
 
 miro.onReady(() => {
     miro.broadcastData(terminalMounted())

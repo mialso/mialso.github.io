@@ -1,4 +1,4 @@
-import { TERMINAL_META, TERMINAL_MOUNTED } from './action'
+import { TERMINAL_META, TERMINAL_MOUNTED } from './actions.mjs'
 
 const ENABLED = 'ENABLED'
 const DISABLED = 'DISABLED'
