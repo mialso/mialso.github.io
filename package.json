@@ -1,0 +1,22 @@
+{
+  "name": "mialso-github-io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mialso/mialso.github.io.git"
+  },
+  "author": "mialso",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mialso/mialso.github.io/issues"
+  },
+  "homepage": "https://github.com/mialso/mialso.github.io#readme",
+  "dependencies": {
+    "xterm": "^4.9.0"
+  }
+}
