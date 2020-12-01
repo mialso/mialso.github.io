@@ -103,7 +103,7 @@ function termCloseHandler() {
 
 function termOpenHandler() {
     setState({ status: IN_PROGRESS }) // actuall MOUNTED comes from terminal itself later
-    terminalClosePromise = miro.board.ui.openModal('/miro/cmdplg/terminal.html', { width: 400, height: 400 })
+    terminalClosePromise = miro.board.ui.openModal('/miro/cmdplg/terminal.html', { width: 760, height: 440 })
 }
 
 function termEventBus(message) {

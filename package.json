@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev:server": "npx http-server -p 5999",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.1/xterm.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.1/xterm.js"></script>
+    <script>
+        var termRun 
+        var miro = {
+            addListener() {
+            },
+            initialize() {
+            },
+            onReady(func) {
+                termRun = func
+            },
+            board: {
+                ui: {
+                    openModal() {
+                    },
+                },
+            },
+            broadcastData(data) {
+                console.info('DATA')
+                console.log(data)
+            },
+        }
+    </script>
+    <script type="module" src="main.mjs"></script>
+    <script type="module" src="terminal.mjs"></script>
+</head>
+<body>
+    <div id="terminal" style="width:740px; height: 420px;"></div>
+</body>
+</html>
+
