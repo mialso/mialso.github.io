@@ -114,9 +114,9 @@ const TERMINAL_MODAL = {
 }
 
 const SPOTLIGHT_MODAL = {
-    HEIGHT: '100%',
+    HEIGHT: 1000,
     URL: '/miro/cmdplg/spotlight.html',
-    WIDTH: '100%',
+    WIDTH: 1000,
 }
 
 function termOpenHandler() {
