@@ -1,4 +1,4 @@
-import { TERMINAL_META, TERMINAL_MOUNTED } from './action.mjs'
+import { SPOTLIGHT_MOUNTED, TERMINAL_META, TERMINAL_MOUNTED } from './action.mjs'
 import { GIPHY_ADD } from './giphyAction.mjs'
 import { runGiphy } from './giphyRunner.mjs'
 import { IMAGE_ADD } from './imageMeAction.mjs'
@@ -138,7 +138,8 @@ function termEventBus(message) {
         return
     }
     switch (action.type) {
-    case TERMINAL_MOUNTED: {
+    case TERMINAL_MOUNTED:
+    case SPOTLIGHT_MOUNTED: {
         setState({ status: MOUNTED })
         break
     }
