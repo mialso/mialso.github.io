@@ -1,4 +1,6 @@
 import { TERMINAL_META, TERMINAL_MOUNTED } from './action.mjs'
+import { GIPHY_ADD } from './giphyAction.mjs'
+import { runGiphy } from './giphyRunner.mjs'
 
 const ENABLED = 'ENABLED'
 const DISABLED = 'DISABLED'
@@ -117,6 +119,10 @@ function termEventBus(message) {
     switch (action.type) {
     case TERMINAL_MOUNTED: {
         setState({ status: MOUNTED })
+        break
+    }
+    case GIPHY_ADD: {
+        runGiphy(action)
         break
     }
     default: break
