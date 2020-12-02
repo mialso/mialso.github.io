@@ -21,6 +21,7 @@
   "dependencies": {
     "xterm": "^4.9.0",
     "express": "*",
+    "request": "*",
     "body-parser": "*",
     "bcrypt": "*"
   },

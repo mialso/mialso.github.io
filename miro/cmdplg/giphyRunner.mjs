@@ -1,14 +1,8 @@
-export const API_DEFAULTS = {
-    // temporarly it will be the fastest to keep it here, it's a test one
-    KEY: 'YpcX8XXldDLZQeuNC7ewnZNj7vmETjFR',
-    RATING: 'pg',
-}
-
 export const runGiphy = async (action) => {
     console.log('START ACTION!')
 
     try {
-        const result = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${API_DEFAULTS.KEY}&rating=${API_DEFAULTS.RATING}&tag=${action.payload}`)
+        const result = await fetch(`/gif?tag=${action.payload}`)
             .then((response) => response.json());
 
         console.log('RESULTS', result);
