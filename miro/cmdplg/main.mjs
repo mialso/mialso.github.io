@@ -104,7 +104,7 @@ function termCloseHandler() {
     } else {
         setState({ status: UNMOUNTED })
     }
-    miro.board.ui.closeBottomPanel()
+    miro.board.ui.closeModal()
 }
 
 const TERMINAL_MODAL = {
