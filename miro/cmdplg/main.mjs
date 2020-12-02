@@ -124,7 +124,7 @@ function termOpenHandler() {
 
     setState({ status: IN_PROGRESS }) // actuall MOUNTED comes from terminal itself later
     terminalClosePromise = miro.board.ui.openModal(CONFIG.URL, {
-        width: CONFIG.WIDTH, 
+        width: CONFIG.WIDTH,
         height: CONFIG.HEIGHT,
     });
 }

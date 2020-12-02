@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/mirotone/dist/styles.css" />
     <link rel="stylesheet" href="spotlight.css">
     <script>
         var run 
@@ -28,9 +29,15 @@
     <script defer type="module" src="spotlight.mjs"></script>
 </head>
 <body>
-    <div id="js-spotlight" class="spotlight">
+    <div class="spotlight" id="js-spotlight">
+        <button class="btn close" id="js-close">
+            <span class="close-icon"></span>
+            <span class="close-label">Esc</span>
+        </button>
         <div class="spotlight-wrapper">
             <input class="spotlight-input" />
+            <span class="spotlight-hint" id="js-hint">What do you want to do?</span>
+            <ul class="spotlight-suggestions" id="js-suggestions"></ul>
         </div>
     </div>
     <button onclick="run()">Run</button>
