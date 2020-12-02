@@ -1,4 +1,5 @@
 import { terminalMounted } from './action.mjs'
+import { giphyAdd } from './giphyAction.mjs'
 import { selectWidgets } from './miroCommand.mjs'
 import { createInnerCommandRunner } from './termCommand.mjs'
 
@@ -22,7 +23,20 @@ const initialState = {
 
 function runMiroCommand(cmdStr, innerRunner) {
     console.info(`[TERM]: got miro command: ${cmdStr}`)
-    miro.broadcastData(selectWidgets())
+
+    const words = cmdStr.split(' ');
+    const app = words[0];
+
+    switch (app) {
+    case 'giphy': {
+        const [_, ...others] = words;
+        miro.broadcastData(giphyAdd(others.join(' ')));
+        break;
+    }
+    default: {
+        miro.broadcastData(selectWidgets())
+    }
+    }
 }
 
 function prompt(term) {
