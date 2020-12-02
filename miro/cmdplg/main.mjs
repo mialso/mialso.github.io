@@ -3,6 +3,8 @@ import { GIPHY_ADD } from './giphyAction.mjs'
 import { runGiphy } from './giphyRunner.mjs'
 import { IMAGE_ADD } from './imageMeAction.mjs'
 import { runImageMe } from './imageMeRunner.mjs'
+import { RUN_MARIO } from './marioAction.mjs'
+import { openMario } from './marioRunner.mjs'
 
 const ENABLED = 'ENABLED'
 const DISABLED = 'DISABLED'
@@ -146,6 +148,10 @@ function termEventBus(message) {
     }
     case IMAGE_ADD: {
         runImageMe(action)
+        break
+    }
+    case RUN_MARIO: {
+        openMario(action)
         break
     }
     default: break

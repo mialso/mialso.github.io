@@ -1,6 +1,7 @@
 
 import { giphyAdd } from './giphyAction.mjs'
 import { imageAdd } from './imageMeAction.mjs'
+import { runMario } from './marioAction.mjs'
 
 // this is very secret constant to emit message for any plugin
 export const PLUGIN_SCOPE = 'PLUGIN_SCOPE'
@@ -35,6 +36,10 @@ export const runMiroCommand = (cmdStr) => {
     case 'image': {
         const [_, ...others] = words;
         miro.broadcastData(imageAdd(others.join(' ')));
+        return true
+    }
+    case 'mario': {
+        miro.broadcastData(runMario());
         return true
     }
     case 'timer': {
