@@ -1,7 +1,5 @@
 import { terminalMounted } from './action.mjs'
-import { giphyAdd } from './giphyAction.mjs'
-import { imageAdd } from './imageMeAction.mjs'
-import { startTimer } from './miroCommand.mjs'
+import { runMiroCommand } from './miroCommand.mjs'
 import { createInnerCommandRunner } from './termCommand.mjs'
 
 const TERM_PREFIX = ' $> '
@@ -20,34 +18,6 @@ function createState() {
 const initialState = {
     row: 0,
     isLastCmdSuccess: false,
-}
-
-function runMiroCommand(cmdStr) {
-    console.info(`[TERM]: got miro command: ${cmdStr}`)
-
-    const words = cmdStr.split(' ');
-    const app = words[0];
-
-    switch (app) {
-    case 'giphy': {
-        const [_, ...others] = words;
-        miro.broadcastData(giphyAdd(others.join(' ')));
-        return true
-    }
-    case 'image': {
-        const [_, ...others] = words;
-        miro.broadcastData(imageAdd(others.join(' ')));
-        return true
-    }
-    case 'timer': {
-        const timeSec = 100
-        miro.broadcastData(startTimer(timeSec))
-        return true
-    }
-    default: {
-        return false
-    }
-    }
 }
 
 function prompt(term) {

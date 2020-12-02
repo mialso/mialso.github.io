@@ -105,10 +105,26 @@ function termCloseHandler() {
     miro.board.ui.closeBottomPanel()
 }
 
-function termOpenHandler() {
-    setState({ status: IN_PROGRESS }) // actuall MOUNTED comes from terminal itself later
-    terminalClosePromise = miro.board.ui.openModal('/miro/cmdplg/terminal.html', { width: 760, height: 440 })
+const TERMINAL_MODAL = {
+    HEIGHT: 440,
+    URL: '/miro/cmdplg/terminal.html',
+    WIDTH: 760,
 }
+
+const SPOTLIGHT_MODAL = {
+    HEIGHT: '100vh',
+    URL: '/miro/cmdplg/spotlight.html',
+    WIDTH: '100vw',
+}
+
+
+function termOpenHandler() {
+    const CONFIG = SPOTLIGHT_MODAL;
+
+    setState({ status: IN_PROGRESS }) // actuall MOUNTED comes from terminal itself later
+    terminalClosePromise = miro.board.ui.openModal(CONFIG.URL, { width: CONFIG.WIDTH, height: CONFIG.HEIGHT })
+}
+
 
 function termEventBus(message) {
     if (!message.data) {

@@ -1,0 +1,27 @@
+.spotlight {
+    display: none;
+}
+
+.spotlight--on {
+    align-items: center;
+    background: rgba(255,255,255,0.9);
+    bottom: 0;
+    display: flex;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0
+}
+
+.spotlight-wrapper {
+    margin: 0 auto;
+    width: 350px;
+}
+
+.spotlight-input {
+    border: 1px solid #CDCCD7;
+    font-size: 18px;
+    line-height: 1.3;
+    padding: 10px;
+    width: 100%;
+}

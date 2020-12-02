@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="spotlight.css">
+    <script>
+        var run 
+        var miro = {
+            addListener() {
+            },
+            initialize() {
+            },
+            onReady(func) {
+                run = func
+            },
+            board: {
+                ui: {
+                    openModal() {
+                    },
+                },
+            },
+            broadcastData(data) {
+                console.info('DATA')
+                console.log(data)
+            },
+        }
+    </script>
+    <script defer type="module" src="main.mjs"></script>
+    <script defer type="module" src="spotlight.mjs"></script>
+</head>
+<body>
+    <div id="js-spotlight" class="spotlight">
+        <div class="spotlight-wrapper">
+            <input class="spotlight-input" />
+        </div>
+    </div>
+    <button onclick="run()">Run</button>
+</body>
+</html>
+
