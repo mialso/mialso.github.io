@@ -8,7 +8,7 @@ export const runGiphy = async (action) => {
     console.log('START ACTION!')
 
     try {
-        const result = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${API_DEFAULTS.KEY}&rating=${API_DEFAULTS.RATING}&tag=${action.meta}`)
+        const result = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${API_DEFAULTS.KEY}&rating=${API_DEFAULTS.RATING}&tag=${action.payload}`)
             .then((response) => response.json());
 
         console.log('RESULTS', result);
