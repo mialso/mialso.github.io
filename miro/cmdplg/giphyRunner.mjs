@@ -3,7 +3,7 @@ export const runGiphy = async (action) => {
 
     try {
         const result = await fetch(`/gif?tag=${action.payload}`)
-            .then((response) => response);
+            .then((response) => response.text());
 
         console.log('RESULTS', result);
 
