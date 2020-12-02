@@ -112,19 +112,20 @@ const TERMINAL_MODAL = {
 }
 
 const SPOTLIGHT_MODAL = {
-    HEIGHT: '100vh',
+    HEIGHT: '100%',
     URL: '/miro/cmdplg/spotlight.html',
-    WIDTH: '100vw',
+    WIDTH: '100%',
 }
-
 
 function termOpenHandler() {
     const CONFIG = SPOTLIGHT_MODAL;
 
     setState({ status: IN_PROGRESS }) // actuall MOUNTED comes from terminal itself later
-    terminalClosePromise = miro.board.ui.openModal(CONFIG.URL, { width: CONFIG.WIDTH, height: CONFIG.HEIGHT })
+    terminalClosePromise = miro.board.ui.openModal(CONFIG.URL, {
+        width: CONFIG.WIDTH, 
+        height: CONFIG.HEIGHT,
+    });
 }
-
 
 function termEventBus(message) {
     if (!message.data) {
