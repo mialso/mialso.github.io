@@ -1,19 +1,21 @@
-import { spotlightMounted } from './action.mjs'
+import { spotlightMounted, unmountSpotlight } from './action.mjs'
 import { runMiroCommand } from './miroCommand.mjs'
 
-const SUPPORTED_ACTIONS = ['CONFETTI', 'GIPHY', 'IMAGE', 'TIMER'];
+const SUPPORTED_ACTIONS = ['CONFETTI', 'GIPHY', 'IMAGE', 'PLAY', 'TIMER'];
 
 const LABELS = {
     CONFETTI: 'Confetti',
     GIPHY: 'Giphy',
     IMAGE: 'Image',
+    PLAY: 'Play',
     TIMER: 'Timer',
 }
 
 const HINTS = {
-    CONFETTI: 'onfetti <span>duration in seconds</span>',
+    CONFETTI: 'confetti <span>duration in seconds</span>',
     GIPHY: 'giphy <span>phrase</span>',
     IMAGE: 'image <span>phrase</span>',
+    PLAY: 'play <span>game - only mario for now</span>',
     TIMER: 'timer <span>duration</span> <span>action (optional)</span>',
     '@OTHER': 'What do you want to do?',
 }
@@ -84,7 +86,7 @@ const handleSearch = (event) => {
 }
 
 const handleClose = () => {
-    miro.board.ui.closeModal()
+    miro.broadcastData(unmountSpotlight());
 }
 
 const handleSuggestionClick = (event) => {

@@ -1,4 +1,9 @@
-import { SPOTLIGHT_MOUNTED, TERMINAL_META, TERMINAL_MOUNTED } from './action.mjs'
+import {
+    SPOTLIGHT_MOUNTED,
+    UNMOUNT_SPOTLIGHT,
+    TERMINAL_META,
+    TERMINAL_MOUNTED,
+} from './action.mjs'
 import { GIPHY_ADD } from './giphyAction.mjs'
 import { runGiphy } from './giphyRunner.mjs'
 import { IMAGE_ADD } from './imageMeAction.mjs'
@@ -142,6 +147,10 @@ function termEventBus(message) {
     case SPOTLIGHT_MOUNTED: {
         setState({ status: MOUNTED })
         break
+    }
+    case UNMOUNT_SPOTLIGHT: {
+        termCloseHandler();
+        break;
     }
     case GIPHY_ADD: {
         runGiphy(action)
