@@ -19,11 +19,13 @@
   },
   "homepage": "https://github.com/mialso/mialso.github.io#readme",
   "dependencies": {
-    "xterm": "^4.9.0",
-    "express": "*",
-    "request": "*",
+    "bcrypt": "*",
     "body-parser": "*",
-    "bcrypt": "*"
+    "express": "*",
+    "node-fetch": "^2.6.1",
+    "request": "*",
+    "unsplash-js": "^7.0.0",
+    "xterm": "^4.9.0"
   },
   "devDependencies": {
     "eslint": "^7.2.0",

@@ -1,5 +1,6 @@
 import { terminalMounted } from './action.mjs'
 import { giphyAdd } from './giphyAction.mjs'
+import { imageAdd } from './imageMeAction.mjs'
 import { startTimer } from './miroCommand.mjs'
 import { createInnerCommandRunner } from './termCommand.mjs'
 
@@ -31,6 +32,11 @@ function runMiroCommand(cmdStr) {
     case 'giphy': {
         const [_, ...others] = words;
         miro.broadcastData(giphyAdd(others.join(' ')));
+        return true
+    }
+    case 'image': {
+        const [_, ...others] = words;
+        miro.broadcastData(imageAdd(others.join(' ')));
         return true
     }
     case 'timer': {

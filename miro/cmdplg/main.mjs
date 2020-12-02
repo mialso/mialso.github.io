@@ -1,6 +1,8 @@
 import { TERMINAL_META, TERMINAL_MOUNTED } from './action.mjs'
 import { GIPHY_ADD } from './giphyAction.mjs'
 import { runGiphy } from './giphyRunner.mjs'
+import { IMAGE_ADD } from './imageMeAction.mjs'
+import { runImageMe } from './imageMeRunner.mjs'
 
 const ENABLED = 'ENABLED'
 const DISABLED = 'DISABLED'
@@ -123,6 +125,10 @@ function termEventBus(message) {
     }
     case GIPHY_ADD: {
         runGiphy(action)
+        break
+    }
+    case IMAGE_ADD: {
+        runImageMe(action)
         break
     }
     default: break
