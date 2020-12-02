@@ -5,10 +5,11 @@
 }
 
 .spotlight--on {
-    align-items: center;
+    align-items: top;
     background: rgba(255,255,255,0.9);
     bottom: 0;
     display: flex;
+    justify-content: center;
     left: 0;
     position: fixed;
     right: 0;
@@ -19,7 +20,7 @@
     animation: animationFadeInDown ease-out 0.2s;
     animation-fill-mode: backwards;
     animation-iteration-count: 1;
-    margin: 0 auto;
+    margin-top: 45vh;
     width: 350px;
 }
 
@@ -45,9 +46,8 @@
 }
 
 .spotlight-input:hover {
-    
+    border-color: rgba(95, 92, 128, 1);
 }
-
 
 .spotlight-input:focus {
     outline: none;
