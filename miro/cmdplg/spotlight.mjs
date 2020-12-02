@@ -72,7 +72,7 @@ const handleSearch = (event) => {
     renderHint(value)
     renderSuggestions(value)
 
-    if (e.key !== 'Enter') {
+    if (event.key !== 'Enter') {
         return false;
     }
 
