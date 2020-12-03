@@ -9,7 +9,7 @@ export const runGiphys = (action) => {
 
     try {
         fetch(`/gifs?q=${action.payload}`)
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((result) => {
                 console.log('RESULTS', result);
 

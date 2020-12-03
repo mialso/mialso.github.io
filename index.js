@@ -63,8 +63,8 @@ var getGiphy = function (tag, callback) {
     });
 };
 
-var getGiphys = function (tag, callback) {
-    var uri = `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_KEY}&rating=pg&limit=15&q=${tag}`;
+var getGiphys = function (q, callback) {
+    var uri = `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_KEY}&rating=pg&limit=15&q=${q}`;
 
     var options = {
         uri: uri,
