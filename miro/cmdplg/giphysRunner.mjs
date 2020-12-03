@@ -8,7 +8,7 @@ export const runGiphys = (action) => {
     console.log('START ACTION!')
 
     try {
-        fetch(`/gif?tag=${action.payload}`)
+        fetch(`/gifs?q=${action.payload}`)
             .then((response) => response.text())
             .then((result) => {
                 console.log('RESULTS', result);

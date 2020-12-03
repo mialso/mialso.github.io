@@ -1,4 +1,4 @@
-import {TERMINAL_META} from './action.mjs';
+import { TERMINAL_META } from './action.mjs';
 
 export const GIPHYS_SEARCH = 'GIPHYS_SEARCH'
 export const GIPHYS_RESULTS = 'GIPHYS_RESULTS'
@@ -14,4 +14,3 @@ export const giphysResults = (results) => ({
     meta: TERMINAL_META,
     payload: results,
 });
-

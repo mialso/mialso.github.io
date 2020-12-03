@@ -9,12 +9,12 @@ const ACTION_CONFIG = {
         hint: 'confetti <span>duration in seconds</span>',
         shouldCloseTerminal: true,
     },
-    GIPHY: {
+    GIF: {
         label: 'Gif',
         hint: 'gif <span>keyword</span>',
         shouldCloseTerminal: true,
     },
-    GIPHYS: {
+    GIFS: {
         label: 'Gifs',
         hint: 'gifs <span>keyword</span>',
         shouldCloseTerminal: false,
