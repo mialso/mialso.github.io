@@ -57,18 +57,46 @@ var getGiphy = function (tag, callback) {
 };
 
 var getImage = function (tag, callback) {
-    unsplashApi.search.getPhotos({ query: tag, page: 1, perPage: 1, orderBy: "latest" }).then(result => {
-        switch (result.type) {
-            case 'error':
-                console.log('error occurred: ', result.errors[0]);
-            case 'success':
-                const photos = result.response;
-                if (photos && photos.results) {
-                    console.log('results', photos.results);
-                    callback(photos.results[0].urls.full);
-                } else {
-                    console.log('not found: ', photos);
-                }
-        }
+    unsplashApi.search.getPhotos({ query: tag, page: 1, perPage: 10, orderBy: "latest" }).then(result => {
+        getPhoto(result, callback, () => {
+            unsplashApi.search.getCollections({ query: tag }).then(result => {
+                getCollectionPhoto(result, callback, () => {
+                    callback("https://assets.zoom.us/images/en-us/desktop/generic/video-not-working.PNG")
+                })
+            })
+        })
     });
 };
+
+var getPhoto = (result, callback, fallback) => {
+    switch (result.type) {
+        case 'error':
+            console.log('error occurred: ', result.errors[0]);
+        case 'success':
+            const photos = result.response;
+            if (photos && Array.isArray(photos.results) && photos.results.length) {
+                console.log('results', photos.results);
+                callback(photos.results[0].urls.full);
+            } else {
+                console.log('not found: ', photos);
+                fallback();
+            }
+    }
+}
+
+var getCollectionPhoto = (result, callback, fallback) => {
+    switch (result.type) {
+        case 'error':
+            console.log('error occurred: ', result.errors[0]);
+        case 'success':
+            const photos = result.response;
+            if (photos && Array.isArray(photos.results) && photos.results.length) {
+                console.log('results', photos.results);
+                const collection = photos.results[0]
+                callback(collection.cover_photo.urls.full);
+            } else {
+                console.log('not found: ', photos);
+                fallback();
+            }
+    }
+}

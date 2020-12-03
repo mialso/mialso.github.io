@@ -16,14 +16,24 @@ export const createImageByUrl = (url, tag) => {
                 .then(widgets => {
                     const widget = widgets[0]
                     console.log('widget', widget)
-                    miro.board.selection.selectWidgets(widget.id);
-                    const viewport = {
-                        x: widget.x - 100,
-                        y: widget.y - 100,
-                        width: widget.bounds.width + 200,
-                        height: widget.bounds.height + 200
+
+                    const scaleWidth = widget.bounds.width / vp.width
+                    console.log("scaleWidth", scaleWidth)
+                    const scaleHeight = widget.bounds.height / vp.height
+                    console.log("scaleHeight", scaleHeight)
+                    var scale = scaleWidth > scaleHeight ? scaleWidth : scaleHeight
+                    scale = 1 / scale / 3 // 3 times smaller then the viewport
+
+                    const updateWidget = {
+                        id: widget.id,
+                        x: vp.x + (vp.width / 2),
+                        y: vp.y + (vp.height / 2),
+                        scale: scale
                     }
-                    miro.board.viewport.set(viewport, { animationTimeInMS: 300 });
+                    console.log('update', updateWidget)
+                    miro.board.widgets.update(updateWidget)
+
+                    miro.board.selection.selectWidgets(widget.id);
                 })
         })
 }
