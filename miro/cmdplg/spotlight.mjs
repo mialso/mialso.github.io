@@ -160,8 +160,8 @@ const handleResultClick = (event) => {
     const { url, keyword = '' } = target.dataset;
 
     if (url) {
-        createImageByUrl(url, keyword)
         handleClose();
+        createImageByUrl(url, keyword)
     }
 }
 
