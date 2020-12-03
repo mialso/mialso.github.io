@@ -24,7 +24,7 @@ const ACTION_CONFIG = {
     },
     TIMER: {
         label: 'Timer',
-        hint: 'timer <span>action (start/stop/add)</span> <span>duration</span> <span>unit (seconds/minutes</span>',
+        hint: 'timer <span>duration</span> <span>action (optional)</span>',
         shouldCloseTerminal: true,
     },
 }
