@@ -12,8 +12,7 @@ export const runGiphy = (action) => {
             .then((result) => {
                 console.log('RESULTS', result);
 
-                const url = decodeURIComponent(result)
-                createImageByUrl(url, action.payload)
+                createImageByUrl(result, action.payload)
             })
     } catch (error) {
         // nothing for now
