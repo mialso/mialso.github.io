@@ -1,12 +1,12 @@
 body {
     background-color: transparent;
-    font-family: 'Formular', 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
     Segoe UI Emoji;
 }
 
 .spotlight {
     display: none;
-    font-family: 'Formular', 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
     Segoe UI Emoji;
 }
 
@@ -111,6 +111,8 @@ body {
 
 .suggestion-title {
     color: #050038;
+    font-family: 'Formular', 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
