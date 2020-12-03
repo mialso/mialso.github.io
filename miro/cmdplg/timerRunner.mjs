@@ -1,5 +1,9 @@
 import { startTimer, stopTimer, adjustTimer } from './timerAction.mjs'
 
+const START = 'start'
+const STOP = 'stop'
+const ADD = 'add'
+
 const MINUTE = 'min'
 const HOUR = 'hour'
 const SECOND = 'sec'
@@ -23,26 +27,26 @@ export const verTwoParser = (options) => {
     }
     if (isTimeAction(actOne) && actTwo === 'string') {
         const resultDuration = timeDuration * getTimeMultiple(actOne)
-        return [actTwo, resultDuration]
+        return [actTwo || START, resultDuration]
     }
-    return [actOne, timeDuration * 60]
+    return [actOne || START, timeDuration * 60]
 }
 
 export const evalTimerCmd = (dispatch) => (options) => {
     const [timerAct, seconds] = verTwoParser(options)
     switch (timerAct) {
-    case 'start': {
+    case START: {
         if (!seconds) {
             return 'please specify time in seconds'
         }
         dispatch(startTimer(seconds))
         return true
     }
-    case 'stop': {
+    case STOP: {
         dispatch(stopTimer())
         return true
     }
-    case 'add': {
+    case ADD: {
         if (!seconds) {
             return 'please specify time in seconds'
         }
