@@ -1,24 +1,39 @@
 import { spotlightMounted, unmountSpotlight } from './action.mjs'
 import { runMiroCommand } from './miroCommand.mjs'
 
-const SUPPORTED_ACTIONS = ['CONFETTI', 'GIPHY', 'IMAGE', 'PLAY', 'TIMER'];
-
-const LABELS = {
-    CONFETTI: 'Confetti',
-    GIPHY: 'Giphy',
-    IMAGE: 'Image',
-    PLAY: 'Play',
-    TIMER: 'Timer',
+const ACTION_CONFIG = {
+    CONFETTI: {
+        label: 'Confetti',
+        hint: 'confetti <span>duration in seconds</span>',
+        shouldCloseTerminal: true,
+    },
+    GIPHY: {
+        label: 'Giphy',
+        hint: 'giphy <span>phrase</span>',
+        shouldCloseTerminal: true,
+    },
+    IMAGE: {
+        label: 'Image',
+        hint: 'image <span>phrase</span>',
+        shouldCloseTerminal: true,
+    },
+    MARIO: {
+        label: 'Mario',
+        hint: 'mario <span>start/add</span>',
+        shouldCloseTerminal: false,
+    },
+    TIMER: {
+        label: 'Timer',
+        hint: 'timer <span>action (start/stop/add)</span> <span>duration</span> <span>unit (seconds/minutes</span>',
+        shouldCloseTerminal: true,
+    },
 }
-
-const HINTS = {
-    CONFETTI: 'confetti <span>duration in seconds</span>',
-    GIPHY: 'giphy <span>phrase</span>',
-    IMAGE: 'image <span>phrase</span>',
-    PLAY: 'play <span>game - only mario for now</span>',
-    TIMER: 'timer <span>duration</span> <span>action (optional)</span>',
-    '@OTHER': 'What do you want to do?',
+const DEFAULT_CONFIG = {
+    hint: 'What do you want to do?',
+    shouldCloseTerminal: false,
 }
+const SUPPORTED_ACTIONS = Object.keys(ACTION_CONFIG);
+
 
 const getAction = (value) => value.split(' ')[0].toUpperCase();
 
@@ -39,8 +54,9 @@ const renderHtml = (template, id, replace = false) => {
 
 const renderHint = (value = '') => {
     const action = getAction(value);
+    const config = ACTION_CONFIG[action] || DEFAULT_CONFIG;
 
-    renderHtml(HINTS[action] || HINTS['@OTHER'], 'js-hint', true)
+    renderHtml(config.hint, 'js-hint', true)
 }
 
 const renderSuggestions = (value = '') => {
@@ -58,7 +74,7 @@ const renderSuggestions = (value = '') => {
         renderHtml(`
             <li class="suggestion">
                 <button class="button suggestion-button" data-action=${suggestion} type="button">
-                    <span class="suggestion-title" data-action=${suggestion}>${LABELS[suggestion]}</span>
+                    <span class="suggestion-title" data-action=${suggestion}>${ACTION_CONFIG[suggestion].label}</span>
                 </button>
             </li>`, 'js-suggestions')
     })
@@ -69,7 +85,9 @@ const renderSuggestions = (value = '') => {
 }
 
 const handleSearch = (event) => {
-    const { target: { value } } = event;
+    const { target: { value = '' } } = event;
+    const action = getAction(value);
+    const config = ACTION_CONFIG[action] || DEFAULT_CONFIG;
 
     renderHint(value)
     renderSuggestions(value)
@@ -80,7 +98,7 @@ const handleSearch = (event) => {
 
     const result = runMiroCommand(value);
 
-    if (result === true) {
+    if (result === true && config.shouldCloseTerminal) {
         handleClose();
     }
 }
