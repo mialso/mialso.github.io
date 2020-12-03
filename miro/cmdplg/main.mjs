@@ -189,7 +189,10 @@ function termEventBus(message) {
         )(action.payload)
         return
     }
-    default: return
+    default: {
+        miro.broadcastData(evalCmdError('unknown command'))
+        return
+    }
     }
     // TODO: tmp hack for commands without explicit result handling
     handleCommandResult(true)
