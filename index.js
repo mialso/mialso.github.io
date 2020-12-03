@@ -34,7 +34,7 @@ app.get('/image', function (req, res) {
 
 });
 
-var server = app.listen(process.env.PORT | '3000');
+var server = app.listen(process.env.PORT);
 
 const unsplashApi = unsplash.createApi({
     accessKey: process.env.UNSPLASH_KEY,
