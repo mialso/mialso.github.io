@@ -96,7 +96,7 @@ const renderResults = (results) => {
         renderHtml(`
             <li class="result">
                 <button class="button result-button" data-url=${result.original} data-keyword="gif" type="button">
-                   <img class="result-preview" src="${result.preview}" alt="gif" />
+                   <img class="result-preview" src="${result.preview}" alt="gif" data-url=${result.original} data-keyword="gif" />
                 </button>
             </li>`, 'js-results')
     });
