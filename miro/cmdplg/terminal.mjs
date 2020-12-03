@@ -81,7 +81,14 @@ function initTerminal() {
         case 13: { // ENTER
             const currentTermRow = term.buffer.cursorY
             const rawString = getLineString(term, currentTermRow).split(TERM_PREFIX)[1].trim()
-            const result = runInnerCommand(rawString) || runMiroCommand(rawString)
+            const isInnerComand = runInnerCommand(rawString)
+            if (isInnerComand) {
+                setState({ row: currentTermRow, isLastCmdSuccess: true })
+                prompt(term)
+                break
+            }
+            const result = runMiroCommand(rawString)
+            term.write('\r\n :cmd sent (please wait)')
             break
         }
         default: { // OTHERS
