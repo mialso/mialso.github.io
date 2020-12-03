@@ -25,6 +25,9 @@ export const verTwoParser = (options) => {
     if (Number.isNaN(timeDuration) || typeof timeDuration !== 'number') {
         return options
     }
+    if (timeDuration === 0) {
+        return [STOP]
+    }
     if (isTimeAction(actOne) && actTwo === 'string') {
         const resultDuration = timeDuration * getTimeMultiple(actOne)
         return [actTwo || START, resultDuration]
