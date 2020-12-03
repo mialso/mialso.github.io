@@ -1,3 +1,4 @@
+import { giphysSearch } from './giphysAction.mjs'
 import { giphyAdd } from './giphyAction.mjs'
 import { imageAdd } from './imageMeAction.mjs'
 import { runMario } from './marioAction.mjs'
@@ -18,9 +19,14 @@ export const runMiroCommand = (cmdStr) => {
     const app = words[0];
 
     switch (app) {
-    case 'giphy': {
+    case 'gif': {
         const [_, ...others] = words;
         miro.broadcastData(giphyAdd(others.join(' ')));
+        return true
+    }
+    case 'gifs': {
+        const [_, ...others] = words;
+        miro.broadcastData(giphysSearch(others.join(' ')));
         return true
     }
     case 'image': {

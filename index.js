@@ -20,6 +20,13 @@ app.get('/gif', function (req, res) {
 
 });
 
+app.get('/gifs', function (req, res) {
+    var q = req.query['q'];
+
+    getGiphys(q, (urls) => res.send(urls))
+
+});
+
 app.get('/image', function (req, res) {
     var tag = req.query['tag'];
 
@@ -27,7 +34,7 @@ app.get('/image', function (req, res) {
 
 });
 
-var server = app.listen(process.env.PORT);
+var server = app.listen(process.env.PORT | '3000');
 
 const unsplashApi = unsplash.createApi({
     accessKey: process.env.UNSPLASH_KEY,
@@ -53,6 +60,31 @@ var getGiphy = function (tag, callback) {
         const url = decodeURIComponent(body.data.image_original_url)
 
         callback(url)
+    });
+};
+
+var getGiphys = function (tag, callback) {
+    var uri = `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_KEY}&rating=pg&limit=15&q=${tag}`;
+
+    var options = {
+        uri: uri,
+        method: 'GET',
+        json: true
+    }
+    request(options, function (error, response, body) {
+        console.error('error:', error);
+        console.log('statusCode:', response && response.statusCode);
+
+        if (!body || !body.data) {
+            return;
+        }
+
+        const urls = body.data.map(result => ({
+            preview: decodeURIComponent(result.images.preview_gif.url),
+            original: decodeURIComponent(result.images.original.url),
+        }));
+
+        callback(urls)
     });
 };
 

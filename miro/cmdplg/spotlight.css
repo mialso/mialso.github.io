@@ -114,6 +114,45 @@ body {
     line-height: 24px;
 }
 
+.spotlight-results,
+.result {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.spotlight-results {
+    position: fixed;
+    left: 10vw;
+    right: 10vw;
+    height: auto;
+    max-height: calc(67vh - 100px);
+    overflow: auto;
+    text-align: center;
+    top: calc(33vh + 100px)
+}
+
+.result {
+    display: inline-block;
+    margin: 10px;
+}
+
+.result-button {
+    border: none;
+    background: transparent;
+    display: block;
+    height: auto;
+    padding: 0;
+    width: auto;
+}
+
+.result-preview {
+    height: auto;
+    max-height: 250px;
+    max-width: 250px;
+    width: auto;
+}
+
 .suggestion-hint { 
     display: flex;
     margin: 6px 0;   
