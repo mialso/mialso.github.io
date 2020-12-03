@@ -1,7 +1,6 @@
 import { spotlightMounted, unmountSpotlight, TERMINAL_META } from './action.mjs'
-import { GIPHYS_RESULTS } from './giphysAction.mjs';
+import { GIPHYS_RESULTS, giphysCreate } from './giphysAction.mjs';
 import { runMiroCommand } from './miroCommand.mjs'
-import { createImageByUrl } from './miroFunctions.mjs'
 
 const ACTION_CONFIG = {
     CONFETTI: {
@@ -160,8 +159,11 @@ const handleResultClick = (event) => {
     const { url, keyword = '' } = target.dataset;
 
     if (url) {
+        miro.broadcastData(giphysCreate({
+            url,
+            keyword,
+        }));
         handleClose();
-        createImageByUrl(url, keyword)
     }
 }
 

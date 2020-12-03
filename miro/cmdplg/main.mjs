@@ -9,12 +9,13 @@ import {
 } from './action.mjs'
 import { GIPHY_ADD } from './giphyAction.mjs'
 import { runGiphy } from './giphyRunner.mjs'
-import { GIPHYS_SEARCH } from './giphysAction.mjs'
+import { GIPHYS_CREATE, GIPHYS_SEARCH } from './giphysAction.mjs'
 import { runGiphys } from './giphysRunner.mjs'
 import { IMAGE_ADD } from './imageMeAction.mjs'
 import { runImageMe } from './imageMeRunner.mjs'
 import { RUN_MARIO } from './marioAction.mjs'
 import { openMario } from './marioRunner.mjs'
+import { createImageByUrl } from './miroFunctions.mjs'
 import { EVAL_TIMER } from './timerAction.mjs'
 import { evalTimerCmd } from './timerRunner.mjs'
 
@@ -186,6 +187,10 @@ function termEventBus(message) {
             handleCommandResult,
             runGiphys,
         )(action)
+        break
+    }
+    case GIPHYS_CREATE: {
+        createImageByUrl(action.payload.url, action.payload.url.keyword)
         break
     }
     case IMAGE_ADD: {
