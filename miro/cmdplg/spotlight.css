@@ -217,3 +217,23 @@ body {
     margin: 11px 0 0 0;
 }
   
+
+.mario-page {
+    align-items: center;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0
+}
+
+.mario,
+.iframe {
+    border: none;
+    height: 496px;
+    margin: 0;
+    padding: 0;
+    width: 656px;
+}
