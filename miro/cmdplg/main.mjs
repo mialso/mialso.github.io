@@ -10,6 +10,8 @@ import { IMAGE_ADD } from './imageMeAction.mjs'
 import { runImageMe } from './imageMeRunner.mjs'
 import { RUN_MARIO } from './marioAction.mjs'
 import { openMario } from './marioRunner.mjs'
+import { EVAL_TIMER } from './timerAction.mjs'
+import { evalTimerCmd } from './timerRunner.mjs'
 
 const ENABLED = 'ENABLED'
 const DISABLED = 'DISABLED'
@@ -125,7 +127,8 @@ const SPOTLIGHT_MODAL = {
 }
 
 function termOpenHandler() {
-    const CONFIG = SPOTLIGHT_MODAL;
+    // const CONFIG = SPOTLIGHT_MODAL;
+    const CONFIG = TERMINAL_MODAL;
 
     setState({ status: IN_PROGRESS }) // actuall MOUNTED comes from terminal itself later
     terminalClosePromise = miro.board.ui.openModal(CONFIG.URL, {
@@ -162,6 +165,10 @@ function termEventBus(message) {
     }
     case RUN_MARIO: {
         openMario(action)
+        break
+    }
+    case EVAL_TIMER: {
+        evalTimerCmd(action.payload)
         break
     }
     default: break
