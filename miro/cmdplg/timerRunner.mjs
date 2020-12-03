@@ -1,4 +1,4 @@
-import { startTimer, stopTimer } from './timerAction.mjs'
+import { startTimer, stopTimer, adjustTimer } from './timerAction.mjs'
 
 export const evalTimerCmd = (dispatch) => (options) => {
     const [timerAct, seconds] = options
@@ -14,8 +14,15 @@ export const evalTimerCmd = (dispatch) => (options) => {
         dispatch(stopTimer())
         return true
     }
+    case 'add': {
+        if (!seconds) {
+            return 'please specify time in seconds'
+        }
+        dispatch(adjustTimer())
+        return true
+    }
     default: {
-        return 'unknown timer command, use "start [seconds] || "stop"'
+        return 'unknown timer command, use "start || "stop" || "add"'
     }
     }
 }

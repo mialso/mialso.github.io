@@ -3,10 +3,17 @@ import { TERMINAL_META } from './action.mjs'
 const PLUGIN_SCOPE = 'PLUGIN_SCOPE'
 export const EVAL_TIMER = 'EVAL_TIMER'
 export const START_TIMER = '[PLUGIN] START_TIMER_CMD'
+export const ADJUST_TIMER = '[PLUGIN] INCREASE_TIMER_CMD'
 export const STOP_TIMER = '[PLUGIN] STOP_TIMER_CMD'
 
 export const startTimer = (seconds) => ({
     type: START_TIMER,
+    payload: { seconds },
+    meta: PLUGIN_SCOPE,
+})
+
+export const adjustTimer = (seconds) => ({
+    type: ADJUST_TIMER,
     payload: { seconds },
     meta: PLUGIN_SCOPE,
 })
