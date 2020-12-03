@@ -1,3 +1,5 @@
+import { createImageByUrl } from './miroFunctions.mjs'
+
 export const runImageMe = (action) => {
     if (!action.payload) {
         return 'unknown tag, usage: "$> image [tag]"'
@@ -15,7 +17,8 @@ export const runImageMe = (action) => {
                 }
 
                 const url = decodeURIComponent(result)
-                miro.board.widgets.images.createByURL(url);
+
+                createImageByUrl(url, action.payload)
             })
     } catch (error) {
         // nothing for now

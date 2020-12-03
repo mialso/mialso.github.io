@@ -1,3 +1,5 @@
+import { createImageByUrl } from './miroFunctions.mjs'
+
 export const runGiphy = (action) => {
     if (!action.payload) {
         return 'unknown tag, usage: "$> giphy [tag]"'
@@ -11,7 +13,7 @@ export const runGiphy = (action) => {
                 console.log('RESULTS', result);
 
                 const url = decodeURIComponent(result)
-                miro.board.widgets.images.createByURL(url);
+                createImageByUrl(url, action.payload)
             })
     } catch (error) {
         // nothing for now
