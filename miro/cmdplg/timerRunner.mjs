@@ -1,7 +1,35 @@
 import { startTimer, stopTimer, adjustTimer } from './timerAction.mjs'
 
+const MINUTE = 'min'
+const HOUR = 'hour'
+const SECOND = 'sec'
+
+export const isTimeAction = (action) => {
+    return action === MINUTE || action === HOUR || action === SECOND
+}
+export const getTimeMultiple = (timeAction) => {
+    switch (timeAction) {
+    case MINUTE: return 60
+    case HOUR: return 3600
+    default: return 1
+    }
+}
+
+export const verTwoParser = (options) => {
+    const [duration, actOne, actTwo] = options
+    const timeDuration = Number.parseFloat(duration)
+    if (Number.isNaN(timeDuration) || typeof timeDuration !== 'number') {
+        return options
+    }
+    if (isTimeAction(actOne) && actTwo === 'string') {
+        const resultDuration = timeDuration * getTimeMultiple(actOne)
+        return [actTwo, resultDuration]
+    }
+    return [actOne, timeDuration * 60]
+}
+
 export const evalTimerCmd = (dispatch) => (options) => {
-    const [timerAct, seconds] = options
+    const [timerAct, seconds] = verTwoParser(options)
     switch (timerAct) {
     case 'start': {
         if (!seconds) {

@@ -34,7 +34,6 @@ const DEFAULT_CONFIG = {
 }
 const SUPPORTED_ACTIONS = Object.keys(ACTION_CONFIG);
 
-
 const getAction = (value) => value.split(' ')[0].toUpperCase();
 
 const renderHtml = (template, id, replace = false) => {
