@@ -184,8 +184,8 @@ function termEventBus(message) {
     }
     case EVAL_TIMER: {
         compose(
-            evalTimerCmd(miro.broadcastData),
             handleCommandResult,
+            evalTimerCmd(miro.broadcastData),
         )(action.payload)
         return
     }
