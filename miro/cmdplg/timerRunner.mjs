@@ -18,7 +18,7 @@ export const evalTimerCmd = (dispatch) => (options) => {
         if (!seconds) {
             return 'please specify time in seconds'
         }
-        dispatch(adjustTimer())
+        dispatch(adjustTimer(seconds))
         return true
     }
     default: {
