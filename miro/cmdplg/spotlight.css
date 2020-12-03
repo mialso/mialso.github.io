@@ -9,8 +9,7 @@ body {
 }
 
 .spotlight--on {
-    align-items: top;
-    background: rgba(255,255,255,0.9);
+    align-items: flex-start;
     bottom: 0;
     display: flex;
     justify-content: center;
