@@ -172,14 +172,17 @@ function termEventBus(message) {
     }
     case GIPHY_ADD: {
         runGiphy(action)
+        handleCommandResult(true)
         break
     }
     case IMAGE_ADD: {
         runImageMe(action)
+        handleCommandResult(true)
         break
     }
     case RUN_MARIO: {
         openMario(action)
+        handleCommandResult(true)
         break
     }
     case EVAL_TIMER: {
@@ -187,13 +190,11 @@ function termEventBus(message) {
             handleCommandResult,
             evalTimerCmd(miro.broadcastData),
         )(action.payload)
-        return
+        break
     }
     default: {
-        miro.broadcastData(evalCmdError('unknown command'))
+        // miro.broadcastData(evalCmdError('unknown command'))
         return
     }
     }
-    // TODO: tmp hack for commands without explicit result handling
-    handleCommandResult(true)
 }
