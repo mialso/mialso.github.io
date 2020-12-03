@@ -171,13 +171,17 @@ function termEventBus(message) {
         break;
     }
     case GIPHY_ADD: {
-        runGiphy(action)
-        handleCommandResult(true)
+        compose(
+            handleCommandResult,
+            runGiphy,
+        )(action)
         break
     }
     case IMAGE_ADD: {
-        runImageMe(action)
-        handleCommandResult(true)
+        compose(
+            handleCommandResult,
+            runImageMe,
+        )(action)
         break
     }
     case RUN_MARIO: {
@@ -192,9 +196,6 @@ function termEventBus(message) {
         )(action.payload)
         break
     }
-    default: {
-        // miro.broadcastData(evalCmdError('unknown command'))
-        return
-    }
+    default: break
     }
 }

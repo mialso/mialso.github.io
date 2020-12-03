@@ -4,6 +4,6 @@ export const RUN_MARIO = 'RUN_MARIO'
 
 export const runMario = () => ({
     type: RUN_MARIO,
-    mea: TERMINAL_META,
+    meta: TERMINAL_META,
     payload: "",
 });
