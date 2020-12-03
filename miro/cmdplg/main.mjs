@@ -4,6 +4,7 @@ import {
     UNMOUNT_SPOTLIGHT,
     TERMINAL_META,
     TERMINAL_MOUNTED,
+    SET_UI_TYPE,
     evalCmdError,
     evalCmdSuccess,
 } from './action.mjs'
@@ -24,11 +25,25 @@ const DISABLED = 'DISABLED'
 const MOUNTED = 'MOUNTED'
 const IN_PROGRESS = 'IN_PROGRESS'
 const UNMOUNTED = 'UNMOUNTED'
+const X_TERM = 'X_TERM'
+
+const TERMINAL_MODAL = {
+    HEIGHT: 440,
+    URL: '/miro/cmdplg/terminal.html',
+    WIDTH: 760,
+}
+
+const SPOTLIGHT_MODAL = {
+    HEIGHT: 1000,
+    URL: '/miro/cmdplg/spotlight.html',
+    WIDTH: 1000,
+}
 
 const defaultState = {
     mode: DISABLED,
     status: UNMOUNTED,
     isDebug: true,
+    uiType: SPOTLIGHT_MODAL,
 }
 
 function createState(initialState = {}) {
@@ -122,21 +137,8 @@ function termCloseHandler() {
     miro.board.ui.closeModal()
 }
 
-const TERMINAL_MODAL = {
-    HEIGHT: 440,
-    URL: '/miro/cmdplg/terminal.html',
-    WIDTH: 760,
-}
-
-const SPOTLIGHT_MODAL = {
-    HEIGHT: 1000,
-    URL: '/miro/cmdplg/spotlight.html',
-    WIDTH: 1000,
-}
-
 function termOpenHandler() {
-    const CONFIG = SPOTLIGHT_MODAL;
-    // const CONFIG = TERMINAL_MODAL;
+    const CONFIG = getState().uiType;
 
     setState({ status: IN_PROGRESS }) // actuall MOUNTED comes from terminal itself later
     terminalClosePromise = miro.board.ui.openModal(CONFIG.URL, {
@@ -174,6 +176,24 @@ function termEventBus(message) {
     case UNMOUNT_SPOTLIGHT: {
         termCloseHandler();
         break;
+    }
+    case SET_UI_TYPE: {
+        if (action.payload === X_TERM) {
+            const { uiType } = getState()
+            if (uiType === TERMINAL_MODAL) {
+                break
+            }
+            setState({ uiType: TERMINAL_MODAL })
+        } else {
+            const { uiType } = getState()
+            if (uiType === SPOTLIGHT_MODAL) {
+                break
+            }
+            setState({ uiType: SPOTLIGHT_MODAL })
+        }
+        termCloseHandler();
+        setTimeout(termOpenHandler, 300)
+        break
     }
     case GIPHY_ADD: {
         compose(

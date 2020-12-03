@@ -4,6 +4,7 @@ export const TERMINAL_META = 'TERMINAL_META'
 export const TERMINAL_MOUNTED = 'TERMINAL_MOUNTED'
 export const SPOTLIGHT_MOUNTED = 'SPOTLIGHT_MOUNTED'
 export const UNMOUNT_SPOTLIGHT = 'UNMOUNT_SPOTLIGHT'
+export const SET_UI_TYPE = 'SET_UI_TYPE'
 
 export const terminalMounted = () => ({
     type: TERMINAL_MOUNTED,
@@ -28,5 +29,11 @@ export const spotlightMounted = () => ({
 
 export const unmountSpotlight = () => ({
     type: UNMOUNT_SPOTLIGHT,
+    meta: TERMINAL_META,
+})
+
+export const setUiType = (uiType) => ({
+    type: SET_UI_TYPE,
+    payload: uiType,
     meta: TERMINAL_META,
 })

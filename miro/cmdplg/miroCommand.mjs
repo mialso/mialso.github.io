@@ -3,6 +3,7 @@ import { giphyAdd } from './giphyAction.mjs'
 import { imageAdd } from './imageMeAction.mjs'
 import { runMario } from './marioAction.mjs'
 import { evalTimer } from './timerAction.mjs'
+import { setUiType } from './action.mjs'
 
 export const MIRO_COMMAND = 'MIRO_COMMAND'
 export const SELECT_WIDGETS = 'SELECT_WIDGETS'
@@ -40,6 +41,10 @@ export const runMiroCommand = (cmdStr) => {
     }
     case 'timer': {
         miro.broadcastData(evalTimer(words.slice(1)))
+        return true
+    }
+    case 'mode': {
+        miro.broadcastData(setUiType(words[1]))
         return true
     }
     default: {
