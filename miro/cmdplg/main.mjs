@@ -130,8 +130,8 @@ const SPOTLIGHT_MODAL = {
 }
 
 function termOpenHandler() {
-    // const CONFIG = SPOTLIGHT_MODAL;
-    const CONFIG = TERMINAL_MODAL;
+    const CONFIG = SPOTLIGHT_MODAL;
+    // const CONFIG = TERMINAL_MODAL;
 
     setState({ status: IN_PROGRESS }) // actuall MOUNTED comes from terminal itself later
     terminalClosePromise = miro.board.ui.openModal(CONFIG.URL, {
