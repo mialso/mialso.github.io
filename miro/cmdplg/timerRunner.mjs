@@ -1,17 +1,17 @@
 import { startTimer, stopTimer } from './timerAction.mjs'
 
-export const evalTimerCmd = (options) => {
+export const evalTimerCmd = (dispatch) => (options) => {
     const [timerAct, seconds] = options
     switch (timerAct) {
     case 'start': {
         if (!seconds) {
             return 'please specify time in seconds'
         }
-        miro.broadcastData(startTimer(seconds))
+        dispatch(startTimer(seconds))
         return true
     }
     case 'stop': {
-        miro.broadcastData(stopTimer())
+        dispatch(stopTimer())
         return true
     }
     default: {

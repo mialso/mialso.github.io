@@ -1,3 +1,4 @@
+import { TERMINAL_META } from './action.mjs'
 // this is a very secret constant to emit message for any plugin
 const PLUGIN_SCOPE = 'PLUGIN_SCOPE'
 export const EVAL_TIMER = 'EVAL_TIMER'
@@ -18,4 +19,5 @@ export const stopTimer = () => ({
 export const evalTimer = (options) => ({
     type: EVAL_TIMER,
     payload: options,
+    meta: TERMINAL_META,
 })

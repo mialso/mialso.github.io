@@ -184,12 +184,13 @@ function termEventBus(message) {
     }
     case EVAL_TIMER: {
         compose(
-            evalTimerCmd,
+            evalTimerCmd(miro.broadcastData),
             handleCommandResult,
         )(action.payload)
-        break
+        return
     }
     default: return
     }
+    // TODO: tmp hack for commands without explicit result handling
     handleCommandResult(true)
 }

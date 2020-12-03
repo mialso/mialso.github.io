@@ -91,7 +91,7 @@ function initTerminal() {
             term.write('\r\n :cmd sent (please wait)')
             break
         }
-        default: { // OTHERS
+        default: { // OTHER KEYS
             if (printable) {
                 term.write(key)
             }
