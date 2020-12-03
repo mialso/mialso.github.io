@@ -1,4 +1,7 @@
-import { terminalMounted } from './action.mjs'
+import {
+    TERMINAL_META, EVAL_CMD_SUCCESS, EVAL_CMD_ERROR,
+    terminalMounted,
+} from './action.mjs'
 import { runMiroCommand } from './miroCommand.mjs'
 import { createInnerCommandRunner } from './termCommand.mjs'
 
@@ -19,6 +22,7 @@ const initialState = {
     row: 0,
     isLastCmdSuccess: false,
 }
+const { getState, setState } = createState()
 
 function prompt(term) {
     term.write(`\r\n${TERM_PREFIX}`)
@@ -28,9 +32,35 @@ function getLineString(term, line) {
     return term.buffer.getLine(line).translateToString()
 }
 
+const dataMessageHandler = (term) => (message) => {
+    if (!message.data) {
+        return
+    }
+    const action = message.data
+    if (!(action.type && action.meta && action.meta === TERMINAL_META)) {
+        return
+    }
+    const event = message.data
+    switch (event.type) {
+    case EVAL_CMD_SUCCESS: {
+        const currentTermRow = term.buffer.cursorY
+        setState({ row: currentTermRow, isLastCmdSuccess: true })
+        prompt(term)
+        break
+    }
+    case EVAL_CMD_ERROR: {
+        term.write(`\r\n [ERROR]: ${event.payload}`)
+        const currentTermRow = term.buffer.cursorY
+        setState({ row: currentTermRow, isLastCmdSuccess: false })
+        prompt(term)
+        break
+    }
+    default: break
+    }
+}
+
 function initTerminal() {
     miro.broadcastData(terminalMounted())
-    const { getState, setState } = createState()
     const term = new Terminal();
     const runInnerCommand = createInnerCommandRunner(term, { getState, setState })
     term.open(document.getElementById('terminal'));
@@ -52,8 +82,6 @@ function initTerminal() {
             const currentTermRow = term.buffer.cursorY
             const rawString = getLineString(term, currentTermRow).split(TERM_PREFIX)[1].trim()
             const result = runInnerCommand(rawString) || runMiroCommand(rawString)
-            setState({ row: currentTermRow, isLastCmdSuccess: result })
-            prompt(term)
             break
         }
         default: { // OTHERS
@@ -63,6 +91,7 @@ function initTerminal() {
         }
         }
     })
+    miro.addListener('DATA_BROADCASTED', dataMessageHandler(term))
 }
 
 document.addEventListener('DOMContentLoaded', () => {

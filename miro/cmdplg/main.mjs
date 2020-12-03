@@ -1,8 +1,11 @@
+import { compose } from './util.mjs'
 import {
     SPOTLIGHT_MOUNTED,
     UNMOUNT_SPOTLIGHT,
     TERMINAL_META,
     TERMINAL_MOUNTED,
+    evalCmdError,
+    evalCmdSuccess,
 } from './action.mjs'
 import { GIPHY_ADD } from './giphyAction.mjs'
 import { runGiphy } from './giphyRunner.mjs'
@@ -137,6 +140,18 @@ function termOpenHandler() {
     });
 }
 
+function handleCommandResult(result) {
+    if (result === true) {
+        // SUCCESS
+        miro.broadcastData(evalCmdSuccess())
+        return
+    }
+    if (typeof result === 'string') {
+        // ERROR, message back to those who interested (e.g. terminal)
+        miro.broadcastData(evalCmdError(result))
+    }
+}
+
 function termEventBus(message) {
     if (!message.data) {
         return
@@ -168,9 +183,13 @@ function termEventBus(message) {
         break
     }
     case EVAL_TIMER: {
-        evalTimerCmd(action.payload)
+        compose(
+            evalTimerCmd,
+            handleCommandResult,
+        )(action.payload)
         break
     }
-    default: break
+    default: return
     }
+    handleCommandResult(true)
 }
