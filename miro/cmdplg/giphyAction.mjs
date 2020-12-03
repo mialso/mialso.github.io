@@ -1,4 +1,4 @@
-import {TERMINAL_META} from './action.mjs';
+import { TERMINAL_META } from './action.mjs';
 
 export const GIPHY_ADD = 'GIPHY_ADD'
 

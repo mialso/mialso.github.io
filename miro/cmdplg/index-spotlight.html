@@ -5,8 +5,12 @@
     <link rel="stylesheet" href="spotlight.css">
     <script>
         var run 
-        var miro = {
-            addListener() {
+        const callbacks = [];
+        const miro = {
+            addListener(handler, callback) {
+                if (handler === 'DATA_BROADCASTED') {
+                    callbacks.push(callback);
+                }
             },
             initialize() {
             },
@@ -19,9 +23,49 @@
                     },
                 },
             },
-            broadcastData(data) {
+            broadcastData(action) {
                 console.info('DATA')
-                console.log(data)
+                console.log(action)
+                callbacks.forEach(callback => {
+                    callback({
+                        data: action
+                    })
+                })
+
+                if (!action) {
+                    return
+                }
+                if (!(action.type && action.meta && action.meta === 'TERMINAL_META')) {
+                    return
+                }
+                switch (action.type) {
+                
+                case 'GIPHYS_SEARCH': {
+                    try {
+                        fetch(`/gifs?q=${action.payload}`)
+                            .then((response) => response.json())
+                            .then((result) => {
+                                console.log('RESULTS', result);
+
+                                callbacks.forEach(callback => {
+                                    callback({
+                                        data: {
+                                            type: 'GIPHYS_RESULTS',
+                                            meta: 'TERMINAL_META',
+                                            payload: result,
+                                        }
+                                    })
+                                })
+                                return true
+                            })
+                    } catch (error) {
+                        return 'Could not find gifs related to your query!'
+                    }
+                    break
+                }
+               
+                default: break
+                }
             },
         }
     </script>
@@ -38,6 +82,7 @@
             <input class="spotlight-input" />
             <span class="spotlight-hint" id="js-hint">What do you want to do?</span>
             <ul class="spotlight-suggestions" id="js-suggestions"></ul>
+            <ul class="spotlight-results" id="js-results"></ul>
         </div>
     </div>
     <button onclick="run()">Run</button>

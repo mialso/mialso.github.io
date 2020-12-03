@@ -9,6 +9,8 @@ import {
 } from './action.mjs'
 import { GIPHY_ADD } from './giphyAction.mjs'
 import { runGiphy } from './giphyRunner.mjs'
+import { GIPHYS_SEARCH } from './giphysAction.mjs'
+import { runGiphys } from './giphysRunner.mjs'
 import { IMAGE_ADD } from './imageMeAction.mjs'
 import { runImageMe } from './imageMeRunner.mjs'
 import { RUN_MARIO } from './marioAction.mjs'
@@ -174,6 +176,13 @@ function termEventBus(message) {
         compose(
             handleCommandResult,
             runGiphy,
+        )(action)
+        break
+    }
+    case GIPHYS_SEARCH: {
+        compose(
+            handleCommandResult,
+            runGiphys,
         )(action)
         break
     }

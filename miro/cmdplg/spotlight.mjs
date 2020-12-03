@@ -1,5 +1,7 @@
-import { spotlightMounted, unmountSpotlight } from './action.mjs'
+import { spotlightMounted, unmountSpotlight, TERMINAL_META } from './action.mjs'
+import { GIPHYS_RESULTS } from './giphysAction.mjs';
 import { runMiroCommand } from './miroCommand.mjs'
+import { createImageByUrl } from './miroFunctions.mjs'
 
 const ACTION_CONFIG = {
     CONFETTI: {
@@ -7,14 +9,19 @@ const ACTION_CONFIG = {
         hint: 'confetti <span>duration in seconds</span>',
         shouldCloseTerminal: true,
     },
-    GIPHY: {
-        label: 'Giphy',
-        hint: 'giphy <span>phrase</span>',
+    GIF: {
+        label: 'Gif',
+        hint: 'gif <span>keyword</span>',
         shouldCloseTerminal: true,
+    },
+    GIFS: {
+        label: 'Gifs',
+        hint: 'gifs <span>keyword</span>',
+        shouldCloseTerminal: false,
     },
     IMAGE: {
         label: 'Image',
-        hint: 'image <span>phrase</span>',
+        hint: 'image <span>keyword</span>',
         shouldCloseTerminal: true,
     },
     MARIO: {
@@ -83,13 +90,30 @@ const renderSuggestions = (value = '') => {
     }
 }
 
+const renderResults = (results) => {
+    renderHtml('', 'js-results', true);
+    results.forEach((result) => {
+        renderHtml(`
+            <li class="result">
+                <button class="button result-button" data-url=${result.original} data-keyword="gif" type="button">
+                   <img class="result-preview" src="${result.preview}" alt="gif" />
+                </button>
+            </li>`, 'js-results')
+    });
+}
+
+const cleanResults = () => {
+    renderHtml('', 'js-results', true);
+}
+
 const handleSearch = (event) => {
     const { target: { value = '' } } = event;
     const action = getAction(value);
     const config = ACTION_CONFIG[action] || DEFAULT_CONFIG;
 
-    renderHint(value)
-    renderSuggestions(value)
+    cleanResults();
+    renderHint(value);
+    renderSuggestions(value);
 
     if (event.key !== 'Enter') {
         return false;
@@ -125,6 +149,40 @@ const handleSuggestionClick = (event) => {
     }
 }
 
+const handleResultClick = (event) => {
+    const { target } = event;
+
+    if (!target || !target.dataset) {
+        return;
+    }
+
+    target.blur();
+    const { url, keyword = '' } = target.dataset;
+
+    if (url) {
+        createImageByUrl(url, keyword)
+        handleClose();
+    }
+}
+
+const dataMessageHandler = (message) => {
+    if (!message.data) {
+        return
+    }
+    const action = message.data
+    if (!(action.type && action.meta && action.meta === TERMINAL_META)) {
+        return
+    }
+    const event = message.data
+    switch (event.type) {
+    case GIPHYS_RESULTS: {
+        renderResults(action.payload)
+        break
+    }
+    default: break
+    }
+}
+
 function initSpothlight() {
     miro.broadcastData(spotlightMounted());
 
@@ -132,10 +190,12 @@ function initSpothlight() {
     const $close = $container.getElementsByClassName('close').item(0);
     const $search = $container.getElementsByTagName('input').item(0);
     const $suggestions = $container.getElementsByClassName('spotlight-suggestions').item(0);
+    const $results = $container.getElementsByClassName('spotlight-results').item(0);
 
     $close.addEventListener('click', handleClose);
     $search.addEventListener('keyup', handleSearch);
     $suggestions.addEventListener('click', handleSuggestionClick);
+    $results.addEventListener('click', handleResultClick);
 
     $container.classList.add('spotlight--on')
 
@@ -144,6 +204,8 @@ function initSpothlight() {
     setTimeout(() => {
         $search.focus();
     }, 0)
+
+    miro.addListener('DATA_BROADCASTED', dataMessageHandler)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
