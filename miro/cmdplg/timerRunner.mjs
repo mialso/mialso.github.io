@@ -28,7 +28,7 @@ export const verTwoParser = (options) => {
     if (timeDuration === 0) {
         return [STOP]
     }
-    if (isTimeAction(actOne) && actTwo === 'string') {
+    if (isTimeAction(actOne) && typeof actTwo === 'string') {
         const resultDuration = timeDuration * getTimeMultiple(actOne)
         return [actTwo || START, resultDuration]
     }
