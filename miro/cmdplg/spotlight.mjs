@@ -27,6 +27,28 @@ const ACTION_CONFIG = {
         label: 'Timer',
         hint: 'timer <span>duration</span> <span>action (optional)</span>',
         shouldCloseTerminal: true,
+        suggestions: [
+            {
+                label: '2',
+                hint: 'Board review',
+            },
+            {
+                label: '3',
+                hint: 'Quick voting',
+            },
+            {
+                label: '5',
+                hint: 'Quick retro',
+            },
+            {
+                label: '8',
+                hint: 'Crazy 8',
+            },
+            {
+                label: '15',
+                hint: 'Ideation',
+            },
+        ],
     },
 }
 const DEFAULT_CONFIG = {
@@ -66,6 +88,7 @@ const renderSuggestions = (value = '') => {
 
     // the action is already typed
     if (SUPPORTED_ACTIONS.includes(action)) {
+        renderActionSuggestions(action, value);
         return;
     }
 
@@ -82,6 +105,35 @@ const renderSuggestions = (value = '') => {
     if (!value) {
         renderHtml('<li class="suggestion suggestion-hint"><span class="spotlight-hint">Or just start typing</span></li>', 'js-suggestions')
     }
+}
+
+const renderActionSuggestions = (actionItem, value = '') => {
+
+    const action = ACTION_CONFIG[actionItem]
+
+    if (!action) {
+        return;
+    }
+
+    const supportedSuggestions = action.suggestions ? action.suggestions : [];
+
+    if (!supportedSuggestions.length) {
+        return;
+    }
+
+    const args = value.split(' ').slice(1).filter(item => item.length);
+
+    const suggestions = args.length ? supportedSuggestions.filter((suggestion) => args.filter(arg => suggestion.label.includes(arg)).length) : supportedSuggestions;
+    suggestions.forEach((suggestion) => {
+        renderHtml(`
+            <li class="suggestion">
+                <button class="button suggestion-button" data-action='${actionItem} ${suggestion.label}' type="button">
+                    <span class="suggestion-title" data-action='${actionItem} ${suggestion.label}'>${suggestion.label}</span>
+                    <span class="suggestion-action-hint" data-action='${actionItem} ${suggestion.label}'>${suggestion.hint}</span>
+                </button>
+            </li>`, 'js-suggestions')
+    })
+
 }
 
 const renderResults = (results) => {

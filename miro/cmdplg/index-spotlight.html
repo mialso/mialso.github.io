@@ -7,6 +7,9 @@
         var run 
         const callbacks = [];
         const miro = {
+            showNotification(message) {
+                console.log(message)
+            },
             addListener(handler, callback) {
                 if (handler === 'DATA_BROADCASTED') {
                     callbacks.push(callback);
