@@ -1,10 +1,7 @@
-export const openMario = async (action) => {
-    console.log('run mario')
-
+export const openMario = async () => {
     try {
-        const url = "https://t-plugin.herokuapp.com/miro/cmdplg/mario.html";
-        miro.board.ui.openModal(url, { width: 660, height: 500 })
-            .then(() => { miro.showNotification("Mario closed"); });
+        const url = 'https://t-plugin.herokuapp.com/miro/cmdplg/mario.html';
+        miro.board.ui.openModal(url, { width: 800, height: 800 });
     } catch (error) {
         // nothing for now
     }

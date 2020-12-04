@@ -1,4 +1,7 @@
+import { sendNotification } from './action.mjs'
+
 const handleClose = () => {
+    miro.broadcastData(sendNotification('Mario closed'))
     miro.board.ui.closeModal()
 }
 

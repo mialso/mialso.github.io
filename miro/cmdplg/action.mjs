@@ -5,6 +5,7 @@ export const TERMINAL_MOUNTED = 'TERMINAL_MOUNTED'
 export const SPOTLIGHT_MOUNTED = 'SPOTLIGHT_MOUNTED'
 export const UNMOUNT_SPOTLIGHT = 'UNMOUNT_SPOTLIGHT'
 export const SET_UI_TYPE = 'SET_UI_TYPE'
+export const SEND_NOTIFICATION = 'SEND_NOTIFICATION'
 
 export const terminalMounted = () => ({
     type: TERMINAL_MOUNTED,
@@ -35,5 +36,11 @@ export const unmountSpotlight = () => ({
 export const setUiType = (uiType) => ({
     type: SET_UI_TYPE,
     payload: uiType,
+    meta: TERMINAL_META,
+})
+
+export const sendNotification = (message) => ({
+    type: SEND_NOTIFICATION,
+    payload: message,
     meta: TERMINAL_META,
 })

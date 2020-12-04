@@ -5,6 +5,7 @@ import {
     TERMINAL_META,
     TERMINAL_MOUNTED,
     SET_UI_TYPE,
+    SEND_NOTIFICATION,
     evalCmdError,
     evalCmdSuccess,
 } from './action.mjs'
@@ -233,6 +234,10 @@ function termEventBus(message) {
             handleCommandResult,
             evalTimerCmd(miro.broadcastData),
         )(action.payload)
+        break
+    }
+    case SEND_NOTIFICATION: {
+        miro.showNotification(action.payload)
         break
     }
     default: break
