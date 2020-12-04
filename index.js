@@ -89,7 +89,7 @@ var getGiphys = function (q, callback) {
 };
 
 var getImage = function (tag, callback) {
-    unsplashApi.search.getPhotos({ query: tag, page: 1, perPage: 10, orderBy: "latest" }).then(result => {
+    unsplashApi.search.getPhotos({ query: tag, page: 1, perPage: 1, orderBy: "relevant" }).then(result => {
         getPhoto(result, callback, () => {
             unsplashApi.search.getCollections({ query: tag }).then(result => {
                 getCollectionPhoto(result, callback, () => {
@@ -108,7 +108,7 @@ var getPhoto = (result, callback, fallback) => {
             const photos = result.response;
             if (photos && Array.isArray(photos.results) && photos.results.length) {
                 console.log('results', photos.results);
-                callback(photos.results[0].urls.full);
+                callback(photos.results[0].urls.regular);
             } else {
                 console.log('not found: ', photos);
                 fallback();
