@@ -1,8 +1,8 @@
-import { sendNotification } from './action.mjs'
+import { sendNotification, unmountSpotlight } from './action.mjs'
 
 const handleClose = () => {
-    miro.broadcastData(sendNotification('Mario closed'))
-    miro.board.ui.closeModal()
+    miro.broadcastData(sendNotification('Mario closed'));
+    miro.broadcastData(unmountSpotlight());
 }
 
 function initSpothlight() {
