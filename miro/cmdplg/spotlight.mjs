@@ -11,11 +11,6 @@ const ACTION_CONFIG = {
     GIF: {
         label: 'Gif',
         hint: 'gif <span>keyword</span>',
-        shouldCloseTerminal: true,
-    },
-    GIFS: {
-        label: 'Gifs',
-        hint: 'gifs <span>keyword</span>',
         shouldCloseTerminal: false,
     },
     IMAGE: {
@@ -105,10 +100,25 @@ const cleanResults = () => {
     renderHtml('', 'js-results', true);
 }
 
+const selectRandomResult = () => {
+    const $results = document.getElementsByClassName('result-button').item(0);
+
+    if ($results) {
+        $results.click();
+    }
+}
+
+let lastCommand = '';
 const handleSearch = (event) => {
     const { target: { value = '' } } = event;
     const action = getAction(value);
     const config = ACTION_CONFIG[action] || DEFAULT_CONFIG;
+
+    // it should rather use state for it
+    if (lastCommand === value) {
+        selectRandomResult(config);
+        return false;
+    }
 
     cleanResults();
     renderHint(value);
@@ -123,6 +133,8 @@ const handleSearch = (event) => {
     if (result === true && config.shouldCloseTerminal) {
         handleClose();
     }
+
+    lastCommand = value;
 }
 
 const handleClose = () => {

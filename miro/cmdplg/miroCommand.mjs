@@ -22,11 +22,6 @@ export const runMiroCommand = (cmdStr) => {
     switch (app) {
     case 'gif': {
         const [_, ...others] = words;
-        miro.broadcastData(giphyAdd(others.join(' ')));
-        return true
-    }
-    case 'gifs': {
-        const [_, ...others] = words;
         miro.broadcastData(giphysSearch(others.join(' ')));
         return true
     }
