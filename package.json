@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:server": "npx http-server -p 5999",
+    "dev:server": "http-server -p 5999",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
@@ -23,6 +23,7 @@
     "body-parser": "*",
     "express": "*",
     "node-fetch": "^2.6.1",
+    "redux": "^4.0.5",
     "request": "*",
     "unsplash-js": "^7.0.0",
     "xterm": "^4.9.0"
@@ -30,6 +31,7 @@
   "devDependencies": {
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.22.1",
+    "http-server": "^0.12.3"
   }
 }

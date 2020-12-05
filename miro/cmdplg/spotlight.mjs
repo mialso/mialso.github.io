@@ -162,6 +162,9 @@ const selectRandomResult = () => {
 
 let lastCommand = '';
 const handleSearch = (event) => {
+    if (!event) {
+        return
+    }
     const { target: { value = '' } } = event;
     const action = getAction(value);
     const config = ACTION_CONFIG[action] || DEFAULT_CONFIG;
