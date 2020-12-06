@@ -1,6 +1,14 @@
-import { spotlightMounted, unmountSpotlight, TERMINAL_META } from './action.mjs'
+import {
+    TERMINAL_META,
+    spotlightMounted, unmountSpotlight, evalCmd,
+} from './action.mjs'
 import { GIPHYS_RESULTS, giphysCreate } from './giphysAction.mjs';
 import { runMiroCommand } from './miroCommand.mjs'
+import { createSpotlightStore } from './spotlight/store.mjs'
+import { renderInput } from './spotlight/Input.mjs'
+import { setInputValue } from './spotlight/inputAction.mjs'
+import { renderHistory } from './history/History.mjs'
+import { toggleHistory } from './history/historyAction.mjs'
 
 const ACTION_CONFIG = {
     CONFETTI: {
@@ -161,11 +169,16 @@ const selectRandomResult = () => {
 }
 
 let lastCommand = '';
-const handleSearch = (event) => {
+const handleInput = ({ dispatch }) => (event) => {
     if (!event) {
         return
     }
     const { target: { value = '' } } = event;
+
+    if (event.key === 'ArrowUp') {
+        dispatch(toggleHistory())
+        return false;
+    }
     const action = getAction(value);
     const config = ACTION_CONFIG[action] || DEFAULT_CONFIG;
 
@@ -180,9 +193,11 @@ const handleSearch = (event) => {
     renderSuggestions(value);
 
     if (event.key !== 'Enter') {
+        dispatch(setInputValue(value))
         return false;
     }
 
+    dispatch(evalCmd(value))
     const result = runMiroCommand(value);
 
     if (result === true && config.shouldCloseTerminal) {
@@ -196,7 +211,7 @@ const handleClose = () => {
     miro.broadcastData(unmountSpotlight());
 }
 
-const handleSuggestionClick = (event) => {
+const handleSuggestionClick = ({ dispatch }) => (event) => {
     const { target } = event;
 
     if (!target || !target.dataset) {
@@ -207,11 +222,9 @@ const handleSuggestionClick = (event) => {
     const { action } = target.dataset;
 
     if (action) {
-        const $search = document.getElementsByTagName('input').item(0);
-        $search.value = `${action.toLowerCase()} `;
+        dispatch(setInputValue(`${action.toLowerCase()} `, { hasFocus: true }))
         renderHint(action);
         renderSuggestions(action);
-        $search.focus();
     }
 }
 
@@ -253,26 +266,28 @@ const dataMessageHandler = (message) => {
 }
 
 function initSpothlight() {
+    const store = createSpotlightStore()
     miro.broadcastData(spotlightMounted());
 
     const $container = document.getElementById('js-spotlight');
     const $close = $container.getElementsByClassName('close').item(0);
-    const $search = $container.getElementsByTagName('input').item(0);
+    const $input = $container.getElementsByTagName('input').item(0);
     const $suggestions = $container.getElementsByClassName('spotlight-suggestions').item(0);
     const $results = $container.getElementsByClassName('spotlight-results').item(0);
+    const $history = document.querySelector('.cmd-history')
+
+    store.subscribe(renderInput(store, $input))
+    $input.addEventListener('keyup', handleInput(store));
+
+    store.subscribe(renderHistory(store, $history))
 
     $close.addEventListener('click', handleClose);
-    $search.addEventListener('keyup', handleSearch);
-    $suggestions.addEventListener('click', handleSuggestionClick);
+    $suggestions.addEventListener('click', handleSuggestionClick(store));
     $results.addEventListener('click', handleResultClick);
 
     $container.classList.add('spotlight--on')
 
     renderSuggestions();
-
-    setTimeout(() => {
-        $search.focus();
-    }, 0)
 
     miro.addListener('DATA_BROADCASTED', dataMessageHandler)
 }

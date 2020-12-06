@@ -1,3 +1,4 @@
+export const EVAL_CMD = 'EVAL_CMD'
 export const EVAL_CMD_SUCCESS = 'EVAL_CMD_SUCCESS'
 export const EVAL_CMD_ERROR = 'EVAL_CMD_ERROR'
 export const TERMINAL_META = 'TERMINAL_META'
@@ -10,6 +11,11 @@ export const SEND_NOTIFICATION = 'SEND_NOTIFICATION'
 export const terminalMounted = () => ({
     type: TERMINAL_MOUNTED,
     meta: TERMINAL_META,
+})
+
+export const evalCmd = (value) => ({
+    type: EVAL_CMD,
+    payload: value,
 })
 
 export const evalCmdSuccess = () => ({
