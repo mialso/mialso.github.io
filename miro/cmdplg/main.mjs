@@ -66,25 +66,30 @@ function createState(initialState = {}) {
 const { setState, getState } = createState()
 
 miro.onReady(() => {
-    console.info('HERE I AM')
-    console.log(getState())
+    miro.isAuthorized().then((isAuthorized) => {
+        if (!isAuthorized) {
+            return
+        }
+        console.info('HERE I AM')
+        console.log(getState())
 
-    miro.initialize({
-        extensionPoints: {
-            bottomBar: {
-                title: 'T-plugin',
-                svgIcon:
-                    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="5.40736" y1="19.716" x2="11.716" y2="2.59264" stroke="#050038" stroke-width="2" stroke-linecap="round"/>
-                    <line x1="11.4074" y1="19.716" x2="17.716" y2="2.59264" stroke="#050038" stroke-width="2" stroke-linecap="round"/>
-                    </svg>`,
-                onClick: termHandler,
+        miro.initialize({
+            extensionPoints: {
+                bottomBar: {
+                    title: 'T-plugin',
+                    svgIcon:
+                        `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="5.40736" y1="19.716" x2="11.716" y2="2.59264" stroke="#050038" stroke-width="2" stroke-linecap="round"/>
+                        <line x1="11.4074" y1="19.716" x2="17.716" y2="2.59264" stroke="#050038" stroke-width="2" stroke-linecap="round"/>
+                        </svg>`,
+                    onClick: termHandler,
+                },
             },
-        },
+        })
+        miro.addListener('ESC_PRESSED', termHandler)
+        miro.addListener('DATA_BROADCASTED', termEventBus)
+        toggleMode()
     })
-    miro.addListener('ESC_PRESSED', termHandler)
-    miro.addListener('DATA_BROADCASTED', termEventBus)
-    toggleMode()
 })
 
 function toggleMode() {
